@@ -1,73 +1,51 @@
-# Authentication API
+# Sistema de Reserva de Carros - Backend
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+Este projeto é uma API construída em Java, Spring Boot, PostgreSQL como banco de dados, e Spring Security e JWT para controle de autenticação.
 
-This project is an API built using **Java, Java Spring, Flyway Migrations, PostgresSQL as the database, and Spring Security and JWT for authentication control.**
+A API foi desenvolvida para demonstrar como configurar autenticação e autorização em um aplicativo Spring usando Spring Security.
 
-The API was developed for my [Youtube Tutorial](https://www.youtube.com/watch?v=5w-YCcOjPD0), to demonstrate how to configure Authenticatio and Authorization in Spring application using Spring Security.
+## Sumário
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Uso](#uso)
+- [Endpoints da API](#endpoints-da-api)
+- [Autenticação](#autenticação)
+- [Banco de Dados](#banco-de-dados)
+- [Contribuições](#contribuições)
 
-## Table of Contents
+## Instalação
+1. Clone o repositório:
+   https://github.com/cilasmiguel-git/-sistema_de_reserva_de_carros_backend.git
+2. Instale as dependências com o Maven.
+3. Instale o PostgreSQL.
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Authentication](#authentication)
-- [Database](#database)
-- [Contributing](#contributing)
-
-## Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/Fernanda-Kipper/auth-api.git
-```
-
-2. Install dependencies with Maven
-
-3. Install [PostgresSQL](https://www.postgresql.org/)
-
-## Usage
-
-1. Start the application with Maven
-2. The API will be accessible at http://localhost:8080
+## Configuração
+Antes de executar o backend, configure as propriedades do banco de dados no arquivo `application.properties`. Certifique-se de ter um servidor PostgreSQL em execução e configurado corretamente.
+spring.datasource.url=jdbc:postgresql://localhost:5432/mycars
+spring.datasource.username=seu-usuario
+spring.datasource.password=sua-senha
 
 
-## API Endpoints
-The API provides the following endpoints:
+## Uso
+Inicie a aplicação com o Maven. A API estará acessível em http://localhost:8080.
 
-```markdown
-GET /product - Retrieve a list of all products. (all authenticated users)
+## Endpoints da API
+A API fornece os seguintes endpoints:
 
-POST /product - Register a new product (ADMIN access required).
+- `POST /car`: Salva as informações de um carro.
+- `GET /car`: Retorna a lista de carros disponíveis.
+- `GET /car/{carId}`: Retorna os detalhes de um carro específico.
+- `DELETE /car/{carId}`: Exclui um carro (requer autenticação de um usuário com a função "ADMIN").
+- `POST /reserved-car/reserve/{carId}`: Permite a reserva de um carro (requer autenticação de um usuário com a função "USER").
+- `GET /reserved-car/list-reserved-cars`: Retorna a lista de carros reservados.
 
-POST /auth/login - Login into the App
+## Autenticação
+A API utiliza autenticação baseada em tokens JWT (JSON Web Token) para proteger os endpoints. Para acessar endpoints protegidos, inclua um cabeçalho `Authorization` contendo o token JWT obtido durante o processo de login.
 
-POST /auth/register - Register a new user into the App
-```
+## Banco de Dados
+O projeto utiliza o PostgreSQL como banco de dados. As migrações de banco de dados necessárias são gerenciadas usando o Flyway.
 
-## Authentication
-The API uses Spring Security for authentication control. The following roles are available:
+## Contribuições
+Contribuições são bem-vindas! Se encontrar problemas ou tiver sugestões de melhorias, abra um problema ou envie uma solicitação pull para o repositório.
 
-```
-USER -> Standard user role for logged-in users.
-ADMIN -> Admin role for managing partners (registering new partners).
-```
-To access protected endpoints as an ADMIN user, provide the appropriate authentication credentials in the request header.
-
-## Database
-The project utilizes [PostgresSQL](https://www.postgresql.org/) as the database. The necessary database migrations are managed using Flyway.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request to the repository.
-
-When contributing to this project, please follow the existing code style, [commit conventions](https://www.conventionalcommits.org/en/v1.0.0/), and submit your changes in a separate branch.
-
-
-
-
+Ao contribuir para este projeto, siga o estilo de código existente, convenções de commits e envie suas alterações em um branch separado.

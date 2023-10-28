@@ -48,11 +48,20 @@ public class ReservedCarController {
         }
     }
 
-
     @GetMapping("/list-reserved-cars")
     public List<ReservedCar> getAllReservedCars() {
         return reservedCarRepository.findAll();
     }
 
+    @DeleteMapping("/cancel-reservation/{reservedCarId}")
+    public ResponseEntity<String> cancelReservation(@PathVariable UUID reservedCarId) {
+        Optional<ReservedCar> reservedCarOptional = reservedCarRepository.findById(reservedCarId);
+        if (reservedCarOptional.isPresent()) {
+            reservedCarRepository.delete(reservedCarOptional.get());
+            return ResponseEntity.ok("Reserva de carro cancelada com sucesso.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
